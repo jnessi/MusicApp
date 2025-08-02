@@ -55,6 +55,9 @@ dependencies {
     implementation(libs.coroutines)
     implementation (libs.blurview)
 
+    implementation(libs.exoplayer)
+    implementation (libs.picasso)
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(platform(libs.androidx.compose.bom))
