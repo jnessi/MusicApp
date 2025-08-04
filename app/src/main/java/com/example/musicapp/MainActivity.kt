@@ -1,5 +1,6 @@
 package com.example.musicapp
 
+import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.os.Build
 import android.os.Bundle
@@ -38,7 +39,6 @@ object RetrofitInstance {
             .build()
             .create(ApiService::class.java)
     }
-
 
 }
 
@@ -155,6 +155,9 @@ class MainActivity : AppCompatActivity() {
             },
             isFavorite = { trackId ->
                 favoriteIds.contains(trackId)
+            },
+            onPlayClicked = { track ->
+                openPlayer(track)
             }
         )
 
@@ -261,7 +264,17 @@ class MainActivity : AppCompatActivity() {
             favoriteIds.add(trackId)
         }
 
+    }
 
+    private fun openPlayer(track: TrackItemResponse){
+        val intent = Intent(this, PlayerActivity::class.java).apply {
+            putExtra("title", track.title)
+            putExtra("artist", track.artist.name)
+            putExtra("coverUrl", track.album.cover)
+            putExtra("previewUrl", track.preview)
+            putExtra("duration", track.duration)
+        }
+        startActivity(intent)
     }
 
 

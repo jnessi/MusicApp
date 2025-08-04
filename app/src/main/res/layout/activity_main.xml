@@ -6,15 +6,6 @@
     android:layout_height="match_parent"
     android:background="@color/musicapp_background">
 
-    <ProgressBar
-        android:id="@+id/progressBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:visibility="gone"/>
 
     <TextView
         android:id="@+id/tvMain"
@@ -33,11 +24,11 @@
         android:id="@+id/cvSearchCard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:clickable="false"
-        android:focusable="false"
         android:layout_marginStart="20dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="15dp"
+        android:clickable="false"
+        android:focusable="false"
         app:cardCornerRadius="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -47,9 +38,9 @@
             android:id="@+id/svSeachBar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:iconifiedByDefault="false"
             android:focusable="true"
             android:focusableInTouchMode="true"
+            android:iconifiedByDefault="false"
             android:queryHint="Search for Music" />
 
     </androidx.cardview.widget.CardView>
@@ -465,6 +456,17 @@
 
 
     </com.google.android.material.card.MaterialCardView>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:elevation="10dp"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -4,10 +4,12 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 
+
 class TrackAdapter(
     private var trackList: MutableList<TrackItemResponse> = mutableListOf(),
     private val onFavoriteToggle : (trackId: Long, position: Int) -> Unit,
-    private val isFavorite : (trackId: Long) -> Boolean
+    private val isFavorite : (trackId: Long) -> Boolean,
+    private val onPlayClicked : (track: TrackItemResponse) -> Unit
 ) :
     RecyclerView.Adapter<TrackViewHolder>() {
 
@@ -27,9 +29,10 @@ class TrackAdapter(
     }
 
     override fun onBindViewHolder(holder: TrackViewHolder, position: Int) {
+
         val item = trackList[position]
         val isFav = isFavorite(item.id)
-        holder.bind(item, position, isFav, onFavoriteToggle)
+        holder.bind(item, position, isFav, onFavoriteToggle, onPlayClicked)
     }
 
     override fun getItemCount() = trackList.size
