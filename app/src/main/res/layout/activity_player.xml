@@ -73,11 +73,11 @@
                     android:layout_width="200dp"
                     android:layout_height="200dp"
                     android:layout_gravity="center"
-                    android:scaleType="centerCrop"
-                    tools:src="@drawable/ic_rock"
                     android:background="@drawable/circle_mask"
                     android:clipToOutline="true"
-                    app:shapeAppearanceOverlay = "@drawable/circle_mask"/>
+                    android:scaleType="centerCrop"
+                    app:shapeAppearanceOverlay="@drawable/circle_mask"
+                    tools:src="@drawable/ic_rock" />
 
             </FrameLayout>
 
@@ -90,27 +90,27 @@
         android:id="@+id/detailsTrack"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/cvPlayerCover"
+        android:layout_marginTop="50dp"
         android:gravity="center"
-        android:layout_marginTop="50dp">
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cvPlayerCover">
 
         <TextView
             android:id="@+id/tvDetailsTrackName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="Track"
             android:textSize="30sp"
-            android:textStyle="bold"/>
+            android:textStyle="bold"
+            tools:text="Track" />
 
         <TextView
             android:id="@+id/tvDetailsArtistName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="Artst"
-            android:textSize="15sp"/>
+            android:textSize="15sp"
+            tools:text="Artst" />
 
 
     </LinearLayout>
@@ -119,38 +119,37 @@
         android:id="@+id/trackTime"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/detailsTrack"
+        android:layout_marginTop="20dp"
         android:gravity="center"
-        android:layout_marginTop="20dp">
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/detailsTrack">
 
         <TextView
             android:id="@+id/tvTimeStart"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="00:00"
-            android:layout_marginStart="20sp"/>
+            android:layout_marginStart="20sp"
+            tools:text="00:00" />
 
         <SeekBar
             android:id="@+id/sbTrackBar"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:layout_weight="1"
-            android:progress="0"
             android:max="100"
-            android:thumbTint="@color/white"
+            android:progress="0"
+            android:progressBackgroundTint="#B3B3B3"
             android:progressTint="@color/musicapp_background"
-            android:progressBackgroundTint="#B3B3B3"/>
+            android:thumbTint="@color/white" />
 
         <TextView
             android:id="@+id/tvTimeEnd"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="4:00"
-            android:layout_marginEnd="20sp"/>
-
+            android:layout_marginEnd="20sp"
+            tools:text="4:00" />
 
 
     </LinearLayout>
@@ -159,17 +158,17 @@
         android:id="@+id/btnPlayPause"
         android:layout_width="80dp"
         android:layout_height="80dp"
-        app:cardCornerRadius="40dp"
-        app:cardElevation="8dp"
-        app:strokeWidth="1dp"
-        app:strokeColor="#40FFFFFF"
-        app:cardBackgroundColor="@color/musicapp_background"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/trackTime"
+        android:layout_marginTop="50dp"
         android:clickable="true"
         android:focusable="true"
-        android:layout_marginTop="50dp">
+        app:cardBackgroundColor="@color/musicapp_background"
+        app:cardCornerRadius="40dp"
+        app:cardElevation="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/trackTime"
+        app:strokeColor="#40FFFFFF"
+        app:strokeWidth="1dp">
 
         <eightbitlab.com.blurview.BlurView
             android:id="@+id/bluPlayPause"
@@ -184,12 +183,10 @@
                 android:layout_height="40dp"
                 android:layout_gravity="center"
                 android:src="@drawable/ic_play"
-                app:tint="@color/white"/>
+                app:tint="@color/white" />
 
         </eightbitlab.com.blurview.BlurView>
     </com.google.android.material.card.MaterialCardView>
-
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

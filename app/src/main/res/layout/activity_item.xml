@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tool="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="200dp"
-    xmlns:tool="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_marginVertical="8dp"
     android:layout_marginHorizontal="10dp"
-    app:cardCornerRadius="25dp"
-    app:cardBackgroundColor="@color/musicapp_background_item">
+    android:layout_marginVertical="8dp"
+    app:cardBackgroundColor="@color/musicapp_background_item"
+    app:cardCornerRadius="25dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -17,39 +17,39 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:layout_weight="1"
-            android:gravity="center">
+            android:gravity="center"
+            android:orientation="horizontal">
 
             <ImageView
                 android:id="@+id/imageCoverAlbum"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
-                tool:src="@drawable/ic_rock"
-                android:padding="10dp"/>
+                android:padding="10dp"
+                tool:src="@drawable/ic_rock" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
+                android:layout_gravity="center"
                 android:layout_weight="1"
-                android:layout_gravity="center">
+                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/tvSongName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    tool:text="Nombre Cancion"
+                    android:textColor="@color/black"
                     android:textSize="20sp"
                     android:textStyle="bold"
-                    android:textColor="@color/black"/>
+                    tool:text="@string/item_track_name" />
 
                 <TextView
                     android:id="@+id/tvArtistName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    tool:text="Nombre artista"
-                    android:textSize="20sp" />
+                    android:textSize="20sp"
+                    tool:text="@string/item_artist_name" />
 
             </LinearLayout>
 
@@ -57,52 +57,52 @@
                 android:id="@+id/imageFavSong"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
-                tool:src="@drawable/ic_fav_empty"
                 android:padding="25dp"
-                app:tint="@color/red"/>
+                app:tint="@color/red"
+                tool:src="@drawable/ic_fav_empty" />
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/tvRanking"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tool:text="Ranking"
-                android:textStyle="bold"
-                android:textSize="15sp"
                 android:layout_weight="1"
-                android:gravity="end"/>
+                android:gravity="end"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                tool:text="@string/item_track_ranking" />
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_ranking"
                 android:layout_marginStart="5dp"
-                android:layout_marginEnd="10dp"/>
+                android:layout_marginEnd="10dp"
+                android:src="@drawable/ic_ranking" />
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_duration"
                 android:layout_marginStart="5dp"
-                app:tint="#979595"
                 android:layout_marginEnd="5dp"
-                android:paddingStart="10dp"/>
+                android:paddingStart="10dp"
+                android:src="@drawable/ic_duration"
+                app:tint="#979595" />
 
             <TextView
                 android:id="@+id/tvDuration"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tool:text="Duation"
-                android:textStyle="bold"
+                android:layout_weight="1"
                 android:textSize="15sp"
-                android:layout_weight="1"/>
+                android:textStyle="bold"
+                tool:text="@string/item_track_duration" />
 
         </LinearLayout>
 
@@ -116,19 +116,19 @@
                 android:id="@+id/cvPlayButtom"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                app:cardCornerRadius="25dp"
-                app:cardBackgroundColor="@color/black"
                 android:clickable="true"
-                android:focusable="true">
+                android:focusable="true"
+                app:cardBackgroundColor="@color/black"
+                app:cardCornerRadius="25dp">
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="@string/reproducir"
+                    android:gravity="center"
+                    android:text="@string/play"
                     android:textColor="@color/white"
                     android:textSize="15sp"
-                    android:textStyle="bold"
-                    android:gravity="center"/>
+                    android:textStyle="bold" />
 
             </androidx.cardview.widget.CardView>
 

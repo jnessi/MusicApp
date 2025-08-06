@@ -10,7 +10,7 @@
     <color name="red">#E70606</color>
 
 
-<!--Music App-->
+    <!--Music App-->
     <color name="musicapp_background_card">#FF081A4A</color>
     <color name="musicapp_background_item">#EFEEEE</color>
     <color name="musicapp_background_disabled">#787878</color>

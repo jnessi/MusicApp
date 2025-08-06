@@ -29,6 +29,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitInstance {
 
+// Retrofit singleton instance for making API requests
     private const val BASE_URL = "https://api.deezer.com/"
 
     val api: ApiService by lazy {
@@ -49,7 +50,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var blurViews: List<BlurView>
     private lateinit var retrofit: Retrofit
     private lateinit var trackAdapter: TrackAdapter
-    private var allTracks: List<TrackItemResponse> = emptyList()
 
     private lateinit var genreChartIds: Map<String, Int>
     private lateinit var favoriteIds: MutableSet<Long>
@@ -73,13 +73,14 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-
+    // Initializes all UI components and sets up listeners
     private fun initComponents() {
 
         favoriteIds = mutableSetOf()
 
         favoriteManager = FavoriteManager(this)
 
+        // Observe favorite songs from DataStore and update UI when changed
         lifecycleScope.launch {
             favoriteManager.getFavorites().collect { ids ->
                 val idsAsInt = ids.mapNotNull { it.toLongOrNull() }.toSet()
@@ -90,6 +91,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        // Deezer genre IDs mapped to custom labels
         genreChartIds = mapOf(
             "rock" to 152,
             "pop" to 132,
@@ -101,6 +103,7 @@ class MainActivity : AppCompatActivity() {
         )
 
 
+        // Reference to all blur-enabled views
         blurViews = listOf(
             binding.blurRock,
             binding.blurPop,
@@ -112,10 +115,12 @@ class MainActivity : AppCompatActivity() {
             binding.blurFav
         )
 
+        // Apply blur effect to supported views
         for (blurView in blurViews) {
             setupBlur(blurView)
         }
 
+        // Set click listeners for genre filters
         binding.cvRock.setOnClickListener { searchByGenre("rock") }
         binding.cvLatin.setOnClickListener { searchByGenre("latin") }
         binding.cvPop.setOnClickListener { searchByGenre("pop") }
@@ -124,29 +129,26 @@ class MainActivity : AppCompatActivity() {
         binding.cvElectro.setOnClickListener { searchByGenre("electro") }
         binding.cvMovies.setOnClickListener { searchByGenre("movies") }
         binding.cvFav.setOnClickListener {
-            val favoriteTracks = allTracks.filter { track ->
-                favoriteIds.contains(track.id)
-            }
-            trackAdapter.updateList(favoriteTracks)
-            binding.rvTracks.scrollToPosition(0)
+            showFavoriteTracks()
         }
 
 
-
+        // SearchView text submission logic
         binding.svSeachBar.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
 
                 searchByName(query.orEmpty())
                 return false
             }
-
             override fun onQueryTextChange(newText: String?) = false
 
         })
 
+        // Force SearchView to be expanded on launch
         binding.svSeachBar.isIconified = false
         binding.svSeachBar.requestFocus()
 
+        // Initialize the RecyclerView adapter with lambda callbacks
         trackAdapter = TrackAdapter(
             mutableListOf(),
             onFavoriteToggle = { trackId, position ->
@@ -161,27 +163,28 @@ class MainActivity : AppCompatActivity() {
             }
         )
 
-
+        // Setup RecyclerView
         binding.rvTracks.apply {
             layoutManager = LinearLayoutManager(this@MainActivity)
             adapter = trackAdapter
         }
 
+        // Load home content by default
         homeByDefault()
 
     }
 
 
+    // Fetches tracks by artist name
     private fun searchByName(name: String) {
         binding.progressBar.isVisible = true
         lifecycleScope.launch(Dispatchers.IO) {
-            val myResponse = RetrofitInstance.api.getCancionesDeArtista(name)
+            val myResponse = RetrofitInstance.api.getTrackByArtist(name)
             if (myResponse.isSuccessful) {
                 Log.i("josantproject", "funciona")
                 val track = myResponse.body()
                 if (track != null) {
                     withContext(Dispatchers.Main) {
-                        allTracks = track.data
                         trackAdapter.updateList(track.data)
                         binding.progressBar.isVisible = false
 
@@ -194,6 +197,7 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    // Loads the top chart tracks on app launch
     private fun homeByDefault() {
         binding.progressBar.isVisible = true
         lifecycleScope.launch(Dispatchers.IO) {
@@ -202,7 +206,6 @@ class MainActivity : AppCompatActivity() {
                 val track = myResponse.body()
                 if (track != null) {
                     withContext(Dispatchers.Main) {
-                        allTracks = track.data
                         trackAdapter.updateList(track.data)
                         binding.progressBar.isVisible = false
                     }
@@ -212,6 +215,7 @@ class MainActivity : AppCompatActivity() {
     }
 
 
+    // Applies a blur effect to views (only supported on Android 12+)
     private fun setupBlur(blurView: BlurView) {
         val rootView = window.decorView.findViewById<ViewGroup>(android.R.id.content)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
@@ -224,6 +228,7 @@ class MainActivity : AppCompatActivity() {
     }
 
 
+    // Fetches and displays songs from a specific genre
     private fun searchByGenre(genre: String) {
 
         val key = genre.trim().lowercase()
@@ -237,7 +242,6 @@ class MainActivity : AppCompatActivity() {
                 val track = myResponse.body()
                 if (track != null) {
                     withContext(Dispatchers.Main) {
-                        allTracks = track.data
                         trackAdapter.updateList(track?.data ?: emptyList())
                         binding.rvTracks.scrollToPosition(0)
                         binding.progressBar.isVisible = false
@@ -252,6 +256,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    // Toggles favorite state of a track and updates the local cache
     private fun toggleFavorite(trackId: Long) {
 
         lifecycleScope.launch {
@@ -266,7 +271,8 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    private fun openPlayer(track: TrackItemResponse){
+    // Launches PlayerActivity with track details via intent extras
+    private fun openPlayer(track: TrackItemResponse) {
         val intent = Intent(this, PlayerActivity::class.java).apply {
             putExtra("title", track.title)
             putExtra("artist", track.artist.name)
@@ -275,6 +281,30 @@ class MainActivity : AppCompatActivity() {
             putExtra("duration", track.duration)
         }
         startActivity(intent)
+    }
+
+    // Retrieves favorite tracks by ID from the API and displays them
+    private fun showFavoriteTracks() {
+
+        binding.progressBar.isVisible = true
+
+        lifecycleScope.launch {
+            val favoriteTracks = mutableListOf<TrackItemResponse>()
+
+            for (id in favoriteIds) {
+                val response = RetrofitInstance.api.getTrackById(id)
+                if (response.isSuccessful) {
+                    response.body()?.let { favoriteTracks.add(it) }
+                }
+            }
+
+            withContext(Dispatchers.Main) {
+                trackAdapter.updateList(favoriteTracks)
+                binding.rvTracks.scrollToPosition(0)
+                binding.progressBar.isVisible = false
+            }
+        }
+
     }
 
 

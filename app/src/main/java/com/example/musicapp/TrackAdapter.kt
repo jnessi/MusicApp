@@ -7,15 +7,14 @@ import androidx.recyclerview.widget.RecyclerView
 
 class TrackAdapter(
     private var trackList: MutableList<TrackItemResponse> = mutableListOf(),
-    private val onFavoriteToggle : (trackId: Long, position: Int) -> Unit,
-    private val isFavorite : (trackId: Long) -> Boolean,
-    private val onPlayClicked : (track: TrackItemResponse) -> Unit
+    private val onFavoriteToggle: (trackId: Long, position: Int) -> Unit, // Lambda to handle adding/removing a song from favorites
+    private val isFavorite: (trackId: Long) -> Boolean, // Lambda that determines if a song is currently marked as favorite
+    private val onPlayClicked: (track: TrackItemResponse) -> Unit // Lambda that handles click events to launch the PlayerActivity
 ) :
     RecyclerView.Adapter<TrackViewHolder>() {
 
 
     fun updateList(list: List<TrackItemResponse>) {
-
         trackList.clear()
         trackList.addAll(list)
         notifyDataSetChanged()
